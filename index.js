@@ -3,6 +3,17 @@
 const express = require('express')
 const path = require('path')
 const app = express()
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://mannan:Helloworld@cluster0.xuf5j.mongodb.net/trans?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+    const collection = client.db("test").collection("devices");
+    console.log(collection)
+        // perform actions on the collection object
+    client.close();
+});
+
 const port = 5000
 app.use(express.static(__dirname))
     // app.use(express.static(__dirname + "/vendor"))
