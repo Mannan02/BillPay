@@ -163,7 +163,11 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
+<<<<<<< HEAD
+                    <img src="images/icon/billpay.png" alt="placeholder logo" width="70%" height="70%"/>
+=======
                     <img src="images/icon/billpay.png" alt="placeholder logo" />
+>>>>>>> 8ab6cb88af52bec83eb0eb2acd5d1943f3803fb5
                     <!-- <embed src="images/icon/logo-12.svg"> -->
                 </a>
             </div>
