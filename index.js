@@ -1,4 +1,7 @@
 'use strict';
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://mannan:Helloworld2@cluster0.xuf5j.mongodb.net/Transactions?retryWrites=true&w=majority";
+
 
 const express = require('express')
 const path = require('path')
@@ -16,6 +19,20 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/loginpage/login.html'))
+})
+
+app.post('/dashboard', (req, res) => {
+    MongoClient.connect(uri, { useUnifiedTopology: true })
+        .then(client => {
+            console.log('Connected to Database')
+            const db = client.db("Transactions")
+            const collection = db.collection('trans')
+            const cursor = collection.find().toArray().then(results => {
+                console.log(results)
+                res.json(results)
+            })
+        })
+        .catch(error => console.error(error))
 })
 
 app.listen(process.env.PORT || 5000, () => {

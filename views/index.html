@@ -35,7 +35,7 @@
 
 </head>
 
-<body class="animsition">
+<body class="animsition" onload="runner">
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -369,16 +369,16 @@
                             <div class="col-lg-9">
                                 <h2 class="title-1 m-b-25">Activity Log</h2>
                                 <div class="table-responsive table--no-card m-b-40">
-                                    <table class="table table-borderless table-striped table-earning">
+                                    <table class="table table-borderless table-striped table-earning" id="here_table">
                                         <thead>
                                             <tr>
                                                 <th>date</th>
-                                                <th>order ID</th>
-                                                <th>client</th>
+                                                <th>ID</th>
+                                                <th>Company</th>
                                                 <th class="text-right">total</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <!-- <tbody>
                                             <tr>
                                                 <td>2020-09-29 05:57</td>
                                                 <td>100398</td>
@@ -427,7 +427,7 @@
                                                 <td>Highland Superstores</td>
                                                 <td class="text-right">$30.00</td>
                                             </tr>
-                                        </tbody>
+                                        </tbody> -->
                                     </table>
                                 </div>
                             </div>
@@ -516,7 +516,35 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("Here")
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // document.getElementById("demo").innerHTML = this.responseText;
+                    console.log(this.responseText)
+                    var $tbody = $('<tbody/>');
 
+                    ans = JSON.parse(this.responseText)
+                    console.log(ans.length)
+                    for (var i = 0; i < ans.length; i++) {
+                        temp = ans[i]
+                        var $tr = $('<tr/>')
+                        console.log(temp)
+                        $tr.append('<td>' + temp['Due by'].slice(0, 10) + '</td>');
+                        $tr.append('<td>' + temp['_id'] + '</td>');
+                        $tr.append('<td>' + temp['Company'] + '</td>');
+                        $tr.append('<td class="text-rigt">' + temp['Total Balence'] + '</td>');
+                        $tbody.append($tr)
+                    }
+                    $('#here_table').append($tbody);
+                }
+            };
+            xhttp.open("POST", "/dashboard", true);
+            xhttp.send();
+        });
+    </script>
 </body>
 
 </html>
